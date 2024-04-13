@@ -230,15 +230,55 @@ void trigger_square(char input,int correct)
       }
 }
 
-void play_level(int level)
+
+void show_pattern(int arr_rand[],int size)
+{
+    for(int i = 0; i<size; i++)
+    {
+      int c = arr_rand[i];
+      draw_square_centered(x_centres[c],y_centres[c],5,20,purple,white);
+        for(int i=0; i<(10000000);i++)
+        {
+          ;
+        }
+        draw_square_centered(x_centres[c],y_centres[c],5,20,yellow,white);
+      }
+}
+
+
+int play_level(int level)
 {
   srand(time(NULL));
+  int flag = 1;
   int length_of_round = level+3;
-  int arr_rand[length_of_round];
+  int lives = 3;
+   int arr_rand[length_of_round];
+  
+ 
   for(int i = 0; i<length_of_round; i++)
   {
     arr_rand[i] = rand()%9;
   }
+  
+  while(1)
+  {
+      if(lives)
+      {
+        show_pattern(arr_rand,length_of_round);
+      }
+      else
+      {
+        flag = 0;
+        break;
+      }
+  }
+
+  return flag;
+}
+
+void end_game(int level)
+{
+  
 }
     
 
@@ -252,7 +292,13 @@ int main()
   draw_table();
   while(1)
   {
-    play_level(level);
+     int flag =play_level(level);
+     if(flag)
+     {
+      level++;
+     }
+     else
+     end_game(level);
     c = get_jtag(JTAG_UART_ptr); 
     trigger_square(c,1);
   }

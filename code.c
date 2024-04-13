@@ -259,6 +259,29 @@ return 0; // wrong block activated
 
 void show_pattern(int arr_rand[],int size)
 {
+
+     draw_table(gray);
+    for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+    draw_table(yellow);
+    for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+    draw_table(gray);
+    for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+        draw_table(yellow);
+         for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+
+
     for(int i = 0; i<size; i++)
     {
       int c = arr_rand[i];
@@ -274,22 +297,33 @@ void show_pattern(int arr_rand[],int size)
         }
     }
 
-    draw_table(purple);
-    for(int i=0; i<((1000000));i++)
+    draw_table(gray);
+    for(int i=0; i<((10000000)/2);i++)
         {
           ;
         }
     draw_table(yellow);
-    for(int i=0; i<((1000000));i++)
+    for(int i=0; i<((10000000)/2);i++)
         {
           ;
         }
-    draw_table(purple);
-    for(int i=0; i<((1000000));i++)
+    draw_table(gray);
+    for(int i=0; i<((10000000)/2);i++)
         {
           ;
         }
-    draw_table(yellow);
+        draw_table(yellow);
+          volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
+          char c;
+          while(1)
+          {
+            c = get_jtag(JTAG_UART_ptr);
+            if(c=='\0')
+            return;
+
+          
+          }
+
 }
 
 

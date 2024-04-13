@@ -293,7 +293,7 @@ int play_level(int level)
         int current = 0;
         while(1)
         {
-          if(current == length_of_round)
+          if(current == length_of_round || lives==0)
           break;
 
             c = get_jtag(JTAG_UART_ptr); 
@@ -313,7 +313,16 @@ int play_level(int level)
               lives--;
             }
 
+            trigger_square(c,correct);
         }
+
+        if(lives == 0)
+        {
+          flag = 0;
+        }
+
+        if(current== length_of_round || lives==0)
+        break;
       }
         return flag;
   }

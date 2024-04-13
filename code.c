@@ -50,8 +50,8 @@
 #define purple 0xf81f
 #define black 0x0000
 
-int x_centres[10] = {110,110,110,160,160,160,210,210,210};
-int y_centres[10] = {70,120,170,70,120,170,70,120,170};
+int x_centres[9] = {110,160,210,110,160,210,110,160,210};
+int y_centres[9] = {70,70,70,120,120,120,170,170,170};
 
 void write_pixel(int x, int y, short colour) 
 {
@@ -220,7 +220,7 @@ void trigger_square(char input,int correct)
         {
           ;
         }
-        draw_square_centered(110,70,5,20,yellow,white);
+        draw_square_centered(x_centres[c],y_centres[c],5,20,yellow,white);
       }
 }
     

@@ -137,7 +137,7 @@ void draw_box(int x, int y, int width, int height, short int colour) {
 	}
 }
 
-void draw_square_centered(int x_centre,int y_centre,int padding, int half_side)
+void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,short colour,short colour_border)
 {
     int x_big = x_centre-(padding+half_side);
     int y_big = y_centre-(padding+half_side);
@@ -148,7 +148,7 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side)
     {
       for(int j=y_big; j<=(y_big+2*(half_side+padding));j++)
       {
-        write_pixel(i,j,0Xffff);
+        write_pixel(i,j,colour_border);
       }
     }
 
@@ -156,7 +156,7 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side)
     {
       for(int j=y_small; j<=(y_small+2*half_side);j++)
       {
-        write_pixel(i,j,0xff00);
+        write_pixel(i,j,colour);
       }
     }
 }
@@ -164,20 +164,29 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side)
 
 void draw_table()
 {
-  draw_square_centered(110,70,5,20);
-  draw_square_centered(110,120,5,20);
-  draw_square_centered(110,170,5,20);
-  draw_square_centered(160,70,5,20);
-  draw_square_centered(160,120,5,20);
-  draw_square_centered(160,170,5,20);
-  draw_square_centered(210,70,5,20);
-  draw_square_centered(210,120,5,20);
-  draw_square_centered(210,170,5,20);
+  draw_square_centered(110,70,5,20,yellow,white);
+  draw_square_centered(110,120,5,20,yellow,white);
+  draw_square_centered(110,170,5,20,yellow,white);
+  draw_square_centered(160,70,5,20,yellow,white);
+  draw_square_centered(160,120,5,20,yellow,white);
+  draw_square_centered(160,170,5,20,yellow,white);
+  draw_square_centered(210,70,5,20,yellow,white);
+  draw_square_centered(210,120,5,20,yellow,white);
+  draw_square_centered(210,170,5,20,yellow,white);
 }
 
 int main()
 {
-
   clear_screen();
+  volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
+  char c;
+  while(1)
+  {
+    c = get_jtag(JTAG_UART_ptr); 
+    if(c=='7' || c=='q' || c=='Q')
+    {
+      draw_square_centered(110,70,5,20,);
+    }
+  }
 
 }

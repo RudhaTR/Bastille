@@ -120,8 +120,40 @@ void draw_box(int x, int y, int width, int height, short int colour) {
 	}
 }
 
+void draw_square_centered(int x_centre,int y_centre,int padding, int half_side)
+{
+    int x_big = x_centre-(padding+half_side);
+    int y_big = y_centre-(padding+half_side);
+    int x_small = x_centre-half_side;
+    int y_small = y_centre-half_side;
+
+    for(int i = x_big; i<= (x_big+2*(half_side+padding));i++)
+    {
+      for(int j=y_big; j<=(y_big+2*(half_side+padding));j++)
+      {
+        write_pixel(i,j,0Xffff);
+      }
+    }
+
+      for(int i = x_small; i<= (x_small+2*half_side);i++)
+    {
+      for(int j=y_small; j<=(y_small+2*half_side);j++)
+      {
+        write_pixel(i,j,0xff00);
+      }
+    }
+}
+
 
 void draw_table()
 {
 
+
+}
+
+int main()
+{
+
+  clear_screen();
+  draw_square_centered(110,120,5,20);
 }

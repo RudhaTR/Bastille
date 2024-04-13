@@ -118,6 +118,16 @@ void clear_screen()
 
 }
 
+char get_jtag(volatile int *JTAG_UART_ptr) 
+{
+  int data;
+  data = *(JTAG_UART_ptr);
+  if (data & 0x00008000) // check RVALID
+    return ((char)data & 0xFF);
+  else
+    return ('\0');
+}
+
 void draw_box(int x, int y, int width, int height, short int colour) {
     int x_increment,y_increment;
 	for ( x_increment = 0 ; x_increment < width; x_increment++) {
@@ -163,7 +173,6 @@ void draw_table()
   draw_square_centered(210,70,5,20);
   draw_square_centered(210,120,5,20);
   draw_square_centered(210,170,5,20);
-
 }
 
 int main()

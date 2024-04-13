@@ -216,7 +216,7 @@ void trigger_square(char input,int correct)
       else
       {
          draw_square_centered(x_centres[c],y_centres[c],5,20,colour,white);
-        for(int i=0; i<10000000;i++)
+        for(int i=0; i<(10000000/2);i++)
         {
           ;
         }

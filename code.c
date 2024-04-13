@@ -50,6 +50,9 @@
 #define purple 0xf81f
 #define black 0x0000
 
+int x_centres[10] = {110,110,110,160,160,160,210,210,210};
+int y_centres[10] = {70,120,170,70,120,170,70,120,170};
+
 void write_pixel(int x, int y, short colour) 
 {
   volatile short *vga_addr=(volatile short*)(0x08000000 + (y<<10) + (x<<1));
@@ -118,6 +121,7 @@ void clear_screen()
 
 }
 
+
 char get_jtag(volatile int *JTAG_UART_ptr) 
 {
   int data;
@@ -164,15 +168,41 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,s
 
 void draw_table()
 {
-  draw_square_centered(110,70,5,20,yellow,white);
-  draw_square_centered(110,120,5,20,yellow,white);
-  draw_square_centered(110,170,5,20,yellow,white);
-  draw_square_centered(160,70,5,20,yellow,white);
-  draw_square_centered(160,120,5,20,yellow,white);
-  draw_square_centered(160,170,5,20,yellow,white);
-  draw_square_centered(210,70,5,20,yellow,white);
-  draw_square_centered(210,120,5,20,yellow,white);
-  draw_square_centered(210,170,5,20,yellow,white);
+  draw_square_centered(x_centres[0],y_centres[0],5,20,yellow,white);
+  draw_square_centered(x_centres[1],y_centres[1],5,20,yellow,white);
+  draw_square_centered(x_centres[2],y_centres[2],5,20,yellow,white);
+  draw_square_centered(x_centres[3],y_centres[3],5,20,yellow,white);
+  draw_square_centered(x_centres[4],y_centres[4],5,20,yellow,white);
+  draw_square_centered(x_centres[5],y_centres[5],5,20,yellow,white);
+  draw_square_centered(x_centres[6],y_centres[6],5,20,yellow,white);
+  draw_square_centered(x_centres[7],y_centres[7],5,20,yellow,white);
+  draw_square_centered(x_centres[8],y_centres[8],5,20,yellow,white);
+ 
+}
+
+void trigger_square(char input,int correct)
+{
+    short colour;
+    if(correct == 1)
+    colour = green;
+    else
+    colour = red;
+
+    char c = input;
+
+     if(c=='7' || c=='q' || c=='Q')
+    {
+      draw_square_centered(x_centres[0],y_centres[0],5,20,colour,white);
+      for(int i=0; i<10000000;i++)
+      {
+        ;
+      }
+      draw_square_centered(110,70,5,20,yellow,white);
+    }
+
+
+
+
 }
 
 int main()
@@ -180,13 +210,12 @@ int main()
   clear_screen();
   volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
   char c;
+  clear_screen();
+  draw_table();
   while(1)
   {
     c = get_jtag(JTAG_UART_ptr); 
-    if(c=='7' || c=='q' || c=='Q')
-    {
-      draw_square_centered(110,70,5,20,);
-    }
+    trigger_square(c,1);
   }
 
 }

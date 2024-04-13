@@ -188,22 +188,42 @@ void trigger_square(char input,int correct)
     else
     colour = red;
 
-    char c = input;
+    int c;
 
-     if(c=='7' || c=='q' || c=='Q')
-    {
-      draw_square_centered(x_centres[0],y_centres[0],5,20,colour,white);
-      for(int i=0; i<10000000;i++)
+          if(input=='7' || input=='q' || input=='Q')
+      c = 0;
+    else if(input=='8' || input=='w' || input=='W')
+    c=1;
+     else if(input=='9' || input=='e' || input=='E')
+    c=2;
+     else if(input=='4' || input=='a' || input=='A')
+    c=3;
+     else if(input=='5' || input=='s' || input=='S')
+    c=4;
+     else if(input=='6' || input=='d' || input=='D')
+    c=5;
+     else if(input=='1' || input=='z' || input=='Z')
+    c=6;
+     else if(input=='2' || input=='x' || input=='X')
+    c=7;
+     else if(input=='3' || input=='c' || input=='C')
+    c=8;
+    else
+    c=9;
+
+      if(c==9)
+      return;
+      else
       {
-        ;
+         draw_square_centered(x_centres[c],y_centres[c],5,20,colour,white);
+        for(int i=0; i<10000000;i++)
+        {
+          ;
+        }
+        draw_square_centered(110,70,5,20,yellow,white);
       }
-      draw_square_centered(110,70,5,20,yellow,white);
-    }
-
-
-
-
 }
+    
 
 int main()
 {

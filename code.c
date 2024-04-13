@@ -58,6 +58,8 @@
 
 int x_centres[9] = {110,160,210,110,160,210,110,160,210}; // centres of the respective squares
 int y_centres[9] = {70,70,70,120,120,120,170,170,170};
+ char seg7[10] =	{0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110, 
+						 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01100111};//for displaying the calues on HEX_screen
 
 void write_pixel(int x, int y, short colour) 
 {
@@ -335,6 +337,9 @@ int play_level(int level)
   int lives = 3; // max lives is 3
    int arr_rand[length_of_round]; // array that stores the random order
    volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE; // to input the keyboard
+   volatile int * HEX3_HEX0_ptr = (int *) HEX3_HEX0_BASE;
+	volatile int * HEX5_HEX4_ptr = (int *) HEX5_HEX4_BASE;
+  *HEX3_HEX0_ptr = seg7[level];
   char c; // holds the input
   int correct; //  checks if the value entered is correct or wrong
   for(int i = 0; i<length_of_round; i++)

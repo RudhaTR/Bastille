@@ -268,27 +268,35 @@ void show_pattern(int arr_rand[],int size)
           ;
         }
         draw_square_centered(x_centres[c],y_centres[c],5,20,yellow,white);
+        for(int i=0; i<((10000000/2));i++)
+        {
+          ;
+        }
       }
 }
 
 
 int play_level(int level)
 {
-  srand(time(NULL));
-  int flag = 1;
-  int length_of_round = level+3;
-  int lives = 3;
-   int arr_rand[length_of_round];
-   volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
-  char c;
-  int correct;
+  // seed of the random generator
+  int flag = 1; // checks if you lost or u can go to the next level
+  int length_of_round = level+3; // defines how long the round will be
+  int lives = 3; // max lives is 3
+   int arr_rand[length_of_round]; // array that stores the random order
+   volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE; // to input the keyboard
+  char c; // holds the input
+  int correct; //  checks if the value entered is correct or wrong
   for(int i = 0; i<length_of_round; i++)
   {
-    arr_rand[i] = rand()%9;
+    arr_rand[i] = rand()%9; // populate the array
   }
   
   while(1)
   {
+      for(int i=0; i<(10000000);i++)
+        {
+          ;
+        }//initial delay to make it easier to see
         show_pattern(arr_rand,length_of_round);
         int current = 0;
         while(1)
@@ -329,7 +337,9 @@ int play_level(int level)
 
 void end_game(int level)
 {
-  
+  clear_screen();
+  char c[] = "GAME OVER";
+  write_string(159,119,c);
 }
     
 
@@ -340,16 +350,20 @@ int main()
   int level = 1;
   clear_screen();
   draw_table();
+  srand(time(NULL));
   while(1)
   {
      int flag =play_level(level);
-     if(flag)
+    if(flag)
      {
       level++;
      }
      else
+     {
      end_game(level);
-  
+     break;
+     }
+
   }
 
 }

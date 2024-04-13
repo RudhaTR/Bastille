@@ -42,6 +42,13 @@
 #define JTAG_UART_BASE ((volatile int*) 0xFF201000)
 #define JTAG_UART_CONTROL ((volatile int*) (0xFF201000+4))
 
+#define yellow 0xff00
+#define white 0xffff
+#define red 0xf800
+#define green 0x07e0
+#define gray 0x8410
+#define purple 0xf81f
+#define black 0x0000
 
 void write_pixel(int x, int y, short colour) 
 {
@@ -147,7 +154,15 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side)
 
 void draw_table()
 {
-
+  draw_square_centered(110,70,5,20);
+  draw_square_centered(110,120,5,20);
+  draw_square_centered(110,170,5,20);
+  draw_square_centered(160,70,5,20);
+  draw_square_centered(160,120,5,20);
+  draw_square_centered(160,170,5,20);
+  draw_square_centered(210,70,5,20);
+  draw_square_centered(210,120,5,20);
+  draw_square_centered(210,170,5,20);
 
 }
 
@@ -155,5 +170,5 @@ int main()
 {
 
   clear_screen();
-  draw_square_centered(110,120,5,20);
+
 }

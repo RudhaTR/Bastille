@@ -1,3 +1,9 @@
+
+#include <stdlib.h>
+#include <time.h>
+
+
+
 /* Memory */
 #define DDR_BASE 0x00000000
 #define DDR_END 0x3FFFFFFF
@@ -223,6 +229,17 @@ void trigger_square(char input,int correct)
         draw_square_centered(x_centres[c],y_centres[c],5,20,yellow,white);
       }
 }
+
+void play_level(int level)
+{
+  srand(time(NULL));
+  int length_of_round = level+3;
+  int arr_rand[length_of_round];
+  for(int i = 0; i<length_of_round; i++)
+  {
+    arr_rand[i] = rand()%9;
+  }
+}
     
 
 int main()
@@ -230,10 +247,12 @@ int main()
   clear_screen();
   volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
   char c;
+  int level = 1;
   clear_screen();
   draw_table();
   while(1)
   {
+    play_level(level);
     c = get_jtag(JTAG_UART_ptr); 
     trigger_square(c,1);
   }

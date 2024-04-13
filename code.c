@@ -315,7 +315,7 @@ void show_pattern(int arr_rand[],int size)
         draw_table(yellow);
           volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
           char c;
-          while(1)
+          while(1)// this makes sure that input during the display is not considered for the checks
           {
             c = get_jtag(JTAG_UART_ptr);
             if(c=='\0')

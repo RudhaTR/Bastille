@@ -56,7 +56,7 @@
 #define purple 0xf81f
 #define black 0x0000
 
-int x_centres[9] = {110,160,210,110,160,210,110,160,210};
+int x_centres[9] = {110,160,210,110,160,210,110,160,210}; // centres of the respective squares
 int y_centres[9] = {70,70,70,120,120,120,170,170,170};
 
 void write_pixel(int x, int y, short colour) 
@@ -132,20 +132,12 @@ char get_jtag(volatile int *JTAG_UART_ptr)
 {
   int data;
   data = *(JTAG_UART_ptr);
-  if (data & 0x00008000) // check RVALID
+  if (data & 0x00008000) // check INVALID
     return ((char)data & 0xFF);
   else
     return ('\0');
 }
 
-void draw_box(int x, int y, int width, int height, short int colour) {
-    int x_increment,y_increment;
-	for ( x_increment = 0 ; x_increment < width; x_increment++) {
-		for ( y_increment = 0 ; y_increment < height; y_increment++) {
-			write_pixel(x + x_increment, y + y_increment, colour);
-		}
-	}
-}
 
 void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,short colour,short colour_border)
 {
@@ -172,7 +164,7 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,s
 }
 
 
-void draw_table()
+void draw_table() // draws our initial 9 blocks
 {
   draw_square_centered(x_centres[0],y_centres[0],5,20,yellow,white);
   draw_square_centered(x_centres[1],y_centres[1],5,20,yellow,white);
@@ -186,7 +178,7 @@ void draw_table()
  
 }
 
-void trigger_square(char input,int correct)
+void trigger_square(char input,int correct) //checks whats the input and if its correct or wrong and turns it green or red respectively
 {
     short colour;
     if(correct == 1)
@@ -221,13 +213,47 @@ void trigger_square(char input,int correct)
       return;
       else
       {
-         draw_square_centered(x_centres[c],y_centres[c],5,20,colour,white);
-        for(int i=0; i<(10000000/2);i++)
+         draw_square_centered(x_centres[c],y_centres[c],5,20,colour,white); //render
+        for(int i=0; i<(10000000/2);i++) //delay
         {
           ;
         }
-        draw_square_centered(x_centres[c],y_centres[c],5,20,yellow,white);
+        draw_square_centered(x_centres[c],y_centres[c],5,20,yellow,white); //unrender
       }
+}
+
+int check(char input, int answer) //checks if the key is valid or not if not it just asks for another input else it returns if the answer was correct or not
+{
+
+int c; // checks which block is being activated
+       if(input=='7' || input=='q' || input=='Q')
+      c = 0;
+    else if(input=='8' || input=='w' || input=='W')
+    c=1;
+     else if(input=='9' || input=='e' || input=='E')
+    c=2;
+     else if(input=='4' || input=='a' || input=='A')
+    c=3;
+     else if(input=='5' || input=='s' || input=='S')
+    c=4;
+     else if(input=='6' || input=='d' || input=='D')
+    c=5;
+     else if(input=='1' || input=='z' || input=='Z')
+    c=6;
+     else if(input=='2' || input=='x' || input=='X')
+    c=7;
+     else if(input=='3' || input=='c' || input=='C')
+    c=8;
+    else
+    c=9;
+
+if(c==9) // none of the blocks are being activated
+return 2;
+else if(c==answer) // correct block activated
+return 1;
+else
+return 0; // wrong block activated
+    
 }
 
 
@@ -253,8 +279,9 @@ int play_level(int level)
   int length_of_round = level+3;
   int lives = 3;
    int arr_rand[length_of_round];
-  
- 
+   volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
+  char c;
+  int correct;
   for(int i = 0; i<length_of_round; i++)
   {
     arr_rand[i] = rand()%9;
@@ -262,19 +289,34 @@ int play_level(int level)
   
   while(1)
   {
-      if(lives)
-      {
         show_pattern(arr_rand,length_of_round);
-      }
-      else
-      {
-        flag = 0;
-        break;
-      }
-  }
+        int current = 0;
+        while(1)
+        {
+          if(current == length_of_round)
+          break;
 
-  return flag;
-}
+            c = get_jtag(JTAG_UART_ptr); 
+            int check_correct = check(c,arr_rand[current]);
+            if(check_correct==2)
+            {
+              continue;
+            }
+            else if(check_correct==1)
+            {
+              correct = 1;
+              current++;
+            }
+            else
+            {
+                correct = 0;
+              lives--;
+            }
+
+        }
+      }
+        return flag;
+  }
 
 void end_game(int level)
 {
@@ -285,8 +327,7 @@ void end_game(int level)
 int main()
 {
   clear_screen();
-  volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
-  char c;
+  
   int level = 1;
   clear_screen();
   draw_table();
@@ -299,8 +340,7 @@ int main()
      }
      else
      end_game(level);
-    c = get_jtag(JTAG_UART_ptr); 
-    trigger_square(c,1);
+  
   }
 
 }

@@ -164,17 +164,17 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,s
 }
 
 
-void draw_table() // draws our initial 9 blocks
+void draw_table(short colour) // draws our initial 9 blocks
 {
-  draw_square_centered(x_centres[0],y_centres[0],5,20,yellow,white);
-  draw_square_centered(x_centres[1],y_centres[1],5,20,yellow,white);
-  draw_square_centered(x_centres[2],y_centres[2],5,20,yellow,white);
-  draw_square_centered(x_centres[3],y_centres[3],5,20,yellow,white);
-  draw_square_centered(x_centres[4],y_centres[4],5,20,yellow,white);
-  draw_square_centered(x_centres[5],y_centres[5],5,20,yellow,white);
-  draw_square_centered(x_centres[6],y_centres[6],5,20,yellow,white);
-  draw_square_centered(x_centres[7],y_centres[7],5,20,yellow,white);
-  draw_square_centered(x_centres[8],y_centres[8],5,20,yellow,white);
+  draw_square_centered(x_centres[0],y_centres[0],5,20,colour,white);
+  draw_square_centered(x_centres[1],y_centres[1],5,20,colour,white);
+  draw_square_centered(x_centres[2],y_centres[2],5,20,colour,white);
+  draw_square_centered(x_centres[3],y_centres[3],5,20,colour,white);
+  draw_square_centered(x_centres[4],y_centres[4],5,20,colour,white);
+  draw_square_centered(x_centres[5],y_centres[5],5,20,colour,white);
+  draw_square_centered(x_centres[6],y_centres[6],5,20,colour,white);
+  draw_square_centered(x_centres[7],y_centres[7],5,20,colour,white);
+  draw_square_centered(x_centres[8],y_centres[8],5,20,colour,white);
  
 }
 
@@ -272,7 +272,24 @@ void show_pattern(int arr_rand[],int size)
         {
           ;
         }
-      }
+    }
+
+    draw_table(purple);
+    for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+    draw_table(yellow);
+    for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+    draw_table(purple);
+    for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+    draw_table(yellow);
 }
 
 
@@ -349,7 +366,7 @@ int main()
   
   int level = 1;
   clear_screen();
-  draw_table();
+  draw_table(yellow);
   srand(time(NULL));
   while(1)
   {

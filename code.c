@@ -407,9 +407,9 @@ void end_game(int level)
 {
   clear_screen();
   char GV[] = "GAME OVER";
-  write_string(159,119,GV);
-  char* play = "Press P to Play";
-  write_string(159,130,play);
+  write_string(30,15,GV);
+  char *play = "Press P to Play Again";
+  write_string(25,19,play);
 
   volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
    char c;
@@ -427,12 +427,9 @@ void home_screen()
 		 clear_screen();
 
    char* intro = "Welcome to Dance Floor";
-      int x = 30;
-      write_string(x,30,intro);
-
+      write_string(30,30,intro);
    char* play = "Press P to Play";
-      x = 30;
-   write_string(x,19,play);
+   write_string(30,35,play);
 
    volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
    char c;
@@ -450,13 +447,16 @@ while (1) {
 
 int main()
 {
+  srand(time(NULL));
 
-start:
-  int level = 1;
+  
+ 
   clear_screen();
+  home_screen();
+   start:
   clear_screen();
   draw_table(yellow);
-  srand(time(NULL));
+  int level = 1;
   while(1)
   {
      int flag =play_level(level);

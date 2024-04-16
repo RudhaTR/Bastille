@@ -358,7 +358,7 @@ void show_pattern(int arr_rand[],int size)
           ;
         }
     blink(black);
-    for(int i=0; i<((10000000)/2);i++)
+    for(int i=0; i<((1000000));i++)
         {
           ;
         }
@@ -411,7 +411,7 @@ void show_pattern(int arr_rand[],int size)
           ;
         }
     blink(black);
-    for(int i=0; i<((10000000)/2);i++)
+    for(int i=0; i<((1000000));i++)
         {
           ;
         }

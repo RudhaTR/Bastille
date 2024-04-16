@@ -332,7 +332,7 @@ return 0; // wrong block activated
 void show_pattern(int arr_rand[],int size)
 {
 
-     draw_table(gray);
+    /*draw_table(gray);
     for(int i=0; i<((10000000)/2);i++)
         {
           ;
@@ -348,6 +348,26 @@ void show_pattern(int arr_rand[],int size)
           ;
         }
         draw_table(yellow);
+         for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }*/
+        blink(Teal);
+    for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+    blink(black);
+    for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+    blink(Teal);
+    for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+        blink(black);
          for(int i=0; i<((10000000)/2);i++)
         {
           ;
@@ -369,7 +389,7 @@ void show_pattern(int arr_rand[],int size)
         }
     }
 
-    draw_table(gray);
+    /*draw_table(gray);
     for(int i=0; i<((10000000)/2);i++)
         {
           ;
@@ -384,7 +404,24 @@ void show_pattern(int arr_rand[],int size)
         {
           ;
         }
-        draw_table(yellow);
+        draw_table(yellow);*/
+           blink(green);
+    for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+    blink(black);
+    for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+    blink(green);
+    for(int i=0; i<((10000000)/2);i++)
+        {
+          ;
+        }
+        blink(black);
+    
           volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
           char c;
           while(1)// this makes sure that input during the display is not considered for the checks

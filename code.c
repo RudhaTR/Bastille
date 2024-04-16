@@ -55,6 +55,18 @@
 #define gray 0x8410
 #define purple 0xf81f
 #define black 0x0000
+#define Orange 0xFD20//Works
+#define Blue 0x001F//works
+#define Indigo 0x4810//Dark Blue
+#define Cyan 0x07FF//works
+#define Magenta 0xF81F//works(light purple)
+#define Lime 0x07E0//light green
+#define Teal 0x0410//works
+#define Brown 0xA145//works
+#define gold_orange 0xFE00//works
+#define olive 0x8400//works
+#define coral_pink 0xFBEA//works
+#define peach 0xFDA0//works
 
 int x_centres[9] = {110,160,210,110,160,210,110,160,210}; // centres of the respective squares
 int y_centres[9] = {70,70,70,120,120,120,170,170,170};

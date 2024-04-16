@@ -500,7 +500,49 @@ int play_level(int level)
 
 void end_game(int level)
 {
-  clear_screen();
+ level_screen();
+  blink(red);
+    for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+    blink(black);
+    for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+    blink(red);
+    for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+        blink(black);
+         for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+         blink(red);
+    for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+        blink(black);
+         for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+         blink(red);
+    for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+        blink(black);
+         for(int i=0; i<((1000000));i++)
+        {
+          ;
+        }
+
+  
   char GV[] = "GAME OVER";
   write_string(30,15,GV);
   char *play = "Press P to Play Again";
@@ -520,11 +562,12 @@ while (1) {
 void home_screen()
 {
 		 clear_screen();
+       level_screen();
 
    char* intro = "Welcome to Dance Floor";
-      write_string(30,30,intro);
+      write_string(35,28,intro);
    char* play = "Press P to Play";
-   write_string(30,35,play);
+   write_string(33,32,play);
 
    volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
    char c;
@@ -544,9 +587,6 @@ int main()
 {
   srand(time(NULL));
 
-  
- 
-  clear_screen();
   home_screen();
    start:
   clear_screen();

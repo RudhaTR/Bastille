@@ -406,8 +406,19 @@ int play_level(int level)
 void end_game(int level)
 {
   clear_screen();
-  char c[] = "GAME OVER";
-  write_string(159,119,c);
+  char GV[] = "GAME OVER";
+  write_string(159,119,GV);
+  char* play = "Press P to Play";
+  write_string(159,130,play);
+
+  volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
+   char c;
+while (1) {
+  c = get_jtag(JTAG_UART_ptr);
+  if (c =='P' || c=='p') { // proceed to level screen only when 'P' is received
+    return;
+  }
+}
 }
 
 
@@ -430,7 +441,7 @@ void home_screen()
 
 while (1) {
   c = get_jtag(JTAG_UART_ptr);
-  if (c =='P' || c=='p') { // proceed to level screen only when 'L' is received
+  if (c =='P' || c=='p') { // proceed to level screen only when 'P' is received
     return;
   }
 }
@@ -440,6 +451,7 @@ while (1) {
 int main()
 {
 
+start:
   int level = 1;
   clear_screen();
   clear_screen();
@@ -455,9 +467,8 @@ int main()
      else
      {
      end_game(level);
-     break;
+     goto start;
      }
-
   }
 
 }

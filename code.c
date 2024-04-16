@@ -141,6 +141,26 @@ void clear_screen()
 
 }
 
+void level_screen() 
+{
+  int x, y;
+  for (x = 20; x < 300; x++) {
+    for (y = 15; y < 225; y++) {
+    write_pixel(x,y,gold_orange);
+  }
+  }
+int i;
+  for(i=20;i<=299;i++) write_pixel(i,225,Brown);
+  for(i=20;i<=299;i++) write_pixel(i,15,Brown);
+  for(i=15;i<=225;i++) write_pixel(20,i,Brown);
+  for(i=15;i<=225;i++) write_pixel(299,i,Brown);
+
+   for(i=19;i<=299;i++) write_pixel(i,226,Brown);
+  for(i=20;i<=299;i++) write_pixel(i,14,Brown);
+  for(i=15;i<=225;i++) write_pixel(19,i,Brown);
+  for(i=15;i<=225;i++) write_pixel(300,i,Brown);
+}
+
 
 char get_jtag(volatile int *JTAG_UART_ptr) 
 {
@@ -455,6 +475,7 @@ int main()
   home_screen();
    start:
   clear_screen();
+  level_screen();
   draw_table(yellow);
   int level = 1;
   while(1)

@@ -409,13 +409,39 @@ void end_game(int level)
   char c[] = "GAME OVER";
   write_string(159,119,c);
 }
+
+
+void home_screen()
+{
+		 clear_screen();
+
+   char* intro = "Welcome to Dance Floor";
+      int x = 30;
+      write_string(x,30,intro);
+
+   char* play = "Press P to Play";
+      x = 30;
+   write_string(x,19,play);
+
+   volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
+   char c;
+
+
+
+while (1) {
+  c = get_jtag(JTAG_UART_ptr);
+  if (c =='P' || c=='p') { // proceed to level screen only when 'L' is received
+    return;
+  }
+}
+}
     
 
 int main()
 {
-  clear_screen();
-  
+
   int level = 1;
+  clear_screen();
   clear_screen();
   draw_table(yellow);
   srand(time(NULL));

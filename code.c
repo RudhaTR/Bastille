@@ -161,6 +161,44 @@ int i;
   for(i=15;i<=225;i++) write_pixel(300,i,Brown);
 }
 
+void blink(short color) 
+{
+  int x, y;
+  for (x = 0; x <320; x++)
+  {
+    for (y = 0; y <14; y++)
+    {
+    write_pixel(x,y,color);
+    }
+  }
+
+  for (x = 0; x <320; x++)
+  {
+    for (y = 227; y <240; y++)
+    {
+    write_pixel(x,y,color);
+    }
+  }
+
+  for (x = 0; x <19; x++)
+  {
+    for (y = 0; y <240; y++)
+    {
+    write_pixel(x,y,color);
+    }
+  }
+
+  for (x = 301; x <320; x++)
+  {
+    for (y = 0; y <240; y++)
+    {
+    write_pixel(x,y,color);
+    }
+  }
+
+}
+
+
 
 char get_jtag(volatile int *JTAG_UART_ptr) 
 {

@@ -36,8 +36,7 @@
 #define olive 0x8400//works
 #define coral_pink 0xFBEA//works
 #define peach 0xFDA0//works
-
-short unrender = gold_orange;
+#define unrender gold_orange
 int turret_xcentre[] = {36,98,160,222,284};
 int turret_ycentre = 216;
 int enemy_y_centres[] = {17,45,73,101,129,157};
@@ -224,10 +223,10 @@ int i;
 
 void make_turret(int x_centre,int y_centre,int color)
 {
-   if(color==gold_orange)
+   if(color==unrender)
    { 
-    draw_square_centered(x_centre,y_centre,2,10,gold_orange,gold_orange);
-    draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,gold_orange,gold_orange);
+    draw_square_centered(x_centre,y_centre,2,10,unrender,unrender);
+    draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,unrender,unrender);
    }
    else
    {
@@ -275,5 +274,8 @@ int main()
   draw_line(red);
   for(int i=0; i<5; i++)
   make_turret(turret_xcentre[i],turret_ycentre,red);
+
+  for(int i =0;i<5;i+=2)
+  make_turret(turret_xcentre[i],turret_ycentre,unrender);
    
 }

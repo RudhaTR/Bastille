@@ -156,9 +156,34 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,s
     }
 }
 
+void draw_rectangle_centered(int x_centre,int y_centre,int padding, int breadth_half,int height_half,short colour,short colour_border )
+{
+    int x_big = x_centre-(padding+breadth_half);
+    int y_big = y_centre-(padding+height_half);
+    int x_small = x_centre-breadth_half;
+    int y_small = y_centre-height_half;
+
+    for(int i = x_big; i<= (x_big+2*(breadth_half+padding));i++)
+    {
+      for(int j=y_big; j<=(y_big+2*(height_half+padding));j++)
+      {
+        write_pixel(i,j,colour_border);
+      }
+    }
+
+      for(int i = x_small; i<= (x_small+2*breadth_half);i++)
+    {
+      for(int j=y_small; j<=(y_small+2*height_half);j++)
+      {
+        write_pixel(i,j,colour);
+      }
+    }
+}
+
 
 
 int main()
 {
-  
+    draw_square_centered(160,120,0,20,red,black);
+    draw_rectangle_centered(160,84,0,10,16,red,black);
 }

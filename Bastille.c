@@ -104,6 +104,16 @@ void clear_screen()
   }
 }
 
+char get_jtag(volatile int *JTAG_UART_ptr) 
+{
+  int data;
+  data = *(JTAG_UART_ptr);
+  if (data & 0x00008000) // check INVALID
+    return ((char)data & 0xFF);
+  else
+    return ('\0');
+}
+
 void circle(int x0, int y0, int radius, short color)
 {
 	int x, y;
@@ -114,19 +124,41 @@ void circle(int x0, int y0, int radius, short color)
 			if (x * x + y * y <= radius * radius)
 			{
 				write_pixel(x0 + x, y0 + y, color);
-				
+
 			}
 		}
 	}
 
 }
 
-char get_jtag(volatile int *JTAG_UART_ptr) 
+
+void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,short colour,short colour_border)
 {
-  int data;
-  data = *(JTAG_UART_ptr);
-  if (data & 0x00008000) // check INVALID
-    return ((char)data & 0xFF);
-  else
-    return ('\0');
+    int x_big = x_centre-(padding+half_side);
+    int y_big = y_centre-(padding+half_side);
+    int x_small = x_centre-half_side;
+    int y_small = y_centre-half_side;
+
+    for(int i = x_big; i<= (x_big+2*(half_side+padding));i++)
+    {
+      for(int j=y_big; j<=(y_big+2*(half_side+padding));j++)
+      {
+        write_pixel(i,j,colour_border);
+      }
+    }
+
+      for(int i = x_small; i<= (x_small+2*half_side);i++)
+    {
+      for(int j=y_small; j<=(y_small+2*half_side);j++)
+      {
+        write_pixel(i,j,colour);
+      }
+    }
+}
+
+
+
+int main()
+{
+  
 }

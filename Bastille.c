@@ -104,6 +104,23 @@ void clear_screen()
   }
 }
 
+void circle(int x0, int y0, int radius, short color)
+{
+	int x, y;
+	for (y = -radius; y <= radius; y++)
+	{
+		for (x = -radius; x <= radius; x++)
+		{
+			if (x * x + y * y <= radius * radius)
+			{
+				write_pixel(x0 + x, y0 + y, color);
+				
+			}
+		}
+	}
+
+}
+
 char get_jtag(volatile int *JTAG_UART_ptr) 
 {
   int data;

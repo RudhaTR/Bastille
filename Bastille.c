@@ -39,7 +39,7 @@
 
 int turret_xcentre[] = {36,98,160,222,284};
 int turret_ycentre = 216;
-int enemy_y_centres[];
+int enemy_y_centres[] = {17,45,73,101,129,157};
 
 void write_pixel(int x, int y, short colour) 
 {
@@ -118,7 +118,7 @@ char get_jtag(volatile int *JTAG_UART_ptr)
     return ('\0');
 }
 
-void circle(int x0, int y0, int radius, short color)
+void make_circle(int x0, int y0, int radius, short color)
 {
 	int x, y;
 	for (y = -radius; y <= radius; y++)
@@ -223,15 +223,15 @@ int i;
 
 void make_turret(int x_centre,int y_centre,int color)
 {
-   if(color==1)
-   {
-     draw_square_centered(x_centre,y_centre,2,10,red,white);
-    draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,red,white);
+   if(color==gold_orange)
+   { 
+    draw_square_centered(x_centre,y_centre,2,10,gold_orange,gold_orange);
+    draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,gold_orange,gold_orange);
    }
    else
    {
-     draw_square_centered(x_centre,y_centre,2,10,gold_orange,gold_orange);
-    draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,gold_orange,gold_orange);
+    draw_square_centered(x_centre,y_centre,2,10,color,white);
+    draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,color,white);
    }
 }
 
@@ -253,7 +253,13 @@ void make_grid()
     write_pixel(191,i,red);
     write_pixel(257,i,red);
     write_pixel(319,i,red);
-    
+  }
+  for(int j=0;j<5;j++)
+  {
+  for(int i=0;i<6;i++)
+  {
+    make_circle(turret_xcentre[j],enemy_y_centres[i],5,green);
+  }
   }
 }
 
@@ -267,6 +273,6 @@ int main()
   make_grid();
   draw_line(red);
   for(int i=0; i<5; i++)
-  make_turret(turret_xcentre[i],turret_ycentre, i%2);
+  make_turret(turret_xcentre[i],turret_ycentre,1);
    
 }

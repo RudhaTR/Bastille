@@ -37,8 +37,9 @@
 #define coral_pink 0xFBEA//works
 #define peach 0xFDA0//works
 
-int turret_xcentre[5] = {36,98,160,222,284};
+int turret_xcentre[] = {36,98,160,222,284};
 int turret_ycentre = 216;
+int enemy_y_centres[];
 
 void write_pixel(int x, int y, short colour) 
 {
@@ -243,6 +244,19 @@ void draw_line(short color)
   }
 }
 
+void make_grid()
+{
+  for(int i=3;i<237;i++)
+  {
+    write_pixel(67,i,red);
+    write_pixel(129,i,red);
+    write_pixel(191,i,red);
+    write_pixel(257,i,red);
+    write_pixel(319,i,red);
+    
+  }
+}
+
 
 
 
@@ -250,6 +264,7 @@ int main()
 {
   clear_screen();
   level_screen();
+  make_grid();
   draw_line(red);
   for(int i=0; i<5; i++)
   make_turret(turret_xcentre[i],turret_ycentre, i%2);

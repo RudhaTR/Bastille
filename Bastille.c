@@ -12,8 +12,6 @@
 #define IrDA_BASE 0xFF201020
 #define TIMER_BASE 0xFF202000
 
-
-
 #define JTAG_UART_BASE ((volatile int*) 0xFF201000)
 #define JTAG_UART_CONTROL ((volatile int*) (0xFF201000+4))
 
@@ -40,6 +38,8 @@
 int turret_xcentre[] = {36,98,160,222,284};
 int turret_ycentre = 216;
 int enemy_y_centres[] = {17,45,73,101,129,157};
+int curr_pos;
+short turret_color = red;
 
 void write_pixel(int x, int y, short colour) 
 {
@@ -264,6 +264,30 @@ void make_grid()
 }
 
 
+void move_turret(char c)
+{
+  if(c=='a' || c=='A')
+  {
+    if(curr_pos==0)
+    return;
+
+    make_turret(turret_xcentre[curr_pos],turret_ycentre,unrender);
+    curr_pos= curr_pos-1;
+    make_turret(turret_xcentre[curr_pos],turret_ycentre,turret_color);
+  }
+  else if(c=='d' || c=='D')
+  {
+      if(curr_pos==4)
+      return;
+      
+    make_turret(turret_xcentre[curr_pos],turret_ycentre,unrender);
+    curr_pos= curr_pos+1;
+    make_turret(turret_xcentre[curr_pos],turret_ycentre,turret_color);
+  }
+  else
+  return;
+}
+
 
 
 int main()
@@ -272,10 +296,13 @@ int main()
   level_screen();
   make_grid();
   draw_line(red);
-  for(int i=0; i<5; i++)
-  make_turret(turret_xcentre[i],turret_ycentre,red);
-
-  for(int i =0;i<5;i+=2)
-  make_turret(turret_xcentre[i],turret_ycentre,unrender);
+ make_turret(turret_xcentre[2],turret_ycentre,red);
+ curr_pos = 2;
+ volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
+ while(1)
+ {
+  char c = get_jtag(JTAG_UART_ptr);
+  move_turret(c);
+ }
    
 }

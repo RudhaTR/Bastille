@@ -273,6 +273,6 @@ int main()
   make_grid();
   draw_line(red);
   for(int i=0; i<5; i++)
-  make_turret(turret_xcentre[i],turret_ycentre,1);
+  make_turret(turret_xcentre[i],turret_ycentre,red);
    
 }

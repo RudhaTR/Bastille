@@ -150,15 +150,26 @@ void level_screen()
   }
   }
 int i;
-  for(i=20;i<=299;i++) write_pixel(i,225,Brown);
-  for(i=20;i<=299;i++) write_pixel(i,15,Brown);
-  for(i=15;i<=225;i++) write_pixel(20,i,Brown);
-  for(i=15;i<=225;i++) write_pixel(299,i,Brown);
-
-   for(i=19;i<=299;i++) write_pixel(i,226,Brown);
-  for(i=20;i<=299;i++) write_pixel(i,14,Brown);
-  for(i=15;i<=225;i++) write_pixel(19,i,Brown);
-  for(i=15;i<=225;i++) write_pixel(300,i,Brown);
+  for(i=20;i<=299;i++)
+  {
+   write_pixel(i,225,Brown);
+   write_pixel(i,226,Brown);
+  }
+  for(i=20;i<=299;i++) 
+  {
+    write_pixel(i,14,Brown);
+    write_pixel(i,15,Brown);
+  }
+  for(i=15;i<=225;i++) 
+  {
+      write_pixel(20,i,Brown);
+      write_pixel(19,i,Brown);
+  }
+  for(i=15;i<=225;i++) 
+  {
+    write_pixel(300,i,Brown);
+    write_pixel(299,i,Brown);
+  }
 }
 
 void blink(short color) 

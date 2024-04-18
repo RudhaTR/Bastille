@@ -37,7 +37,8 @@
 #define coral_pink 0xFBEA//works
 #define peach 0xFDA0//works
 
-int turret_centres[5] = {36,98,160,222,284};
+int turret_xcentre[5] = {36,98,160,222,284};
+int turret_ycentre = 216;
 
 void write_pixel(int x, int y, short colour) 
 {
@@ -219,10 +220,18 @@ int i;
   }
 }
 
-void make_turret(int x_centre,int y_centre)
+void make_turret(int x_centre,int y_centre,int color)
 {
+   if(color==1)
+   {
      draw_square_centered(x_centre,y_centre,2,10,red,white);
     draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,red,white);
+   }
+   else
+   {
+     draw_square_centered(x_centre,y_centre,2,10,gold_orange,gold_orange);
+    draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,gold_orange,gold_orange);
+   }
 }
 
 void draw_line(short color)
@@ -241,7 +250,8 @@ int main()
 {
   clear_screen();
   level_screen();
-  
-  make_turret(160,216);
+  draw_line(red);
+  for(int i=0; i<5; i++)
+  make_turret(turret_xcentre[i],turret_ycentre, i%2);
    
 }

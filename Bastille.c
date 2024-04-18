@@ -37,6 +37,8 @@
 #define coral_pink 0xFBEA//works
 #define peach 0xFDA0//works
 
+int turret_centres[5] = {36,98,160,222,284};
+
 void write_pixel(int x, int y, short colour) 
 {
   volatile short *vga_addr=(volatile short*)(0x08000000 + (y<<10) + (x<<1));
@@ -180,10 +182,66 @@ void draw_rectangle_centered(int x_centre,int y_centre,int padding, int breadth_
     }
 }
 
+void level_screen() 
+{
+  int x, y;
+  for (x = 4; x <316; x++) {
+    for (y = 3; y <237; y++) {
+    write_pixel(x,y,gold_orange);
+  }
+  }
+int i;
+  for(i=0;i<320;i++)
+  {
+   write_pixel(i,237,Brown);
+   write_pixel(i,238,Brown);
+   write_pixel(i,239,Brown);
+  }
+  for(i=0;i<320;i++) 
+  {
+    write_pixel(i,0,Brown);
+    write_pixel(i,1,Brown);
+    write_pixel(i,2,Brown);
+  }
+  for(i=0;i<240;i++) 
+  {
+      write_pixel(0,i,Brown);
+      write_pixel(1,i,Brown);
+      write_pixel(2,i,Brown);
+      write_pixel(3,i,Brown);
+  }
+  for(i=0;i<240;i++) 
+  {
+    write_pixel(316,i,Brown);
+    write_pixel(317,i,Brown);
+    write_pixel(318,i,Brown);
+    write_pixel(319,i,Brown);
+  }
+}
+
+void make_turret(int x_centre,int y_centre)
+{
+     draw_square_centered(x_centre,y_centre,2,10,red,white);
+    draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,red,white);
+}
+
+void draw_line(short color)
+{
+    for(int i=4;i<316;i++)
+  {
+    write_pixel(i,173,color);
+    write_pixel(i,172,color);
+  }
+}
+
+
 
 
 int main()
 {
-    draw_square_centered(160,120,0,20,red,black);
-    draw_rectangle_centered(160,84,0,10,16,red,black);
+  clear_screen();
+  level_screen();
+  
+  make_turret(160,216);
+   
 }

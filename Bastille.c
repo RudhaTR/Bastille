@@ -467,8 +467,8 @@ void home_screen()
 
 
    int red_count = 30;
-  int green_count = 0;
-  int blue_count = 0;
+  int green_count = 64;
+  int blue_count = 30;
 
   set_turret_color(red_count,green_count,blue_count);
   
@@ -559,10 +559,12 @@ void start_game()
     numColumns=10;
     if(spawnDelay==600)
     numColumns=20;
-    if(spawnDelay>450)
+    if(spawnDelay>500)
     {
       spawnDelay-=50;
     }
+    if(spawnDelay==500)
+    spawnDelay-=25;
 
   int check = enemy_update();
   if(!check)

@@ -35,13 +35,13 @@
 #define coral_pink 0xFBEA//works
 #define peach 0xFDA0//works
 #define unrender gold_orange
-int turret_xcentre[] = {36,98,160,222,284};
-int turret_ycentre = 216;
-int enemy_y_centres[] = {17,45,73,101,129,157};
-int curr_pos;
-int enemy_radius = 5;
-short turret_color = red;
-int enemy_map[5][6] = {{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0}};
+int turret_xcentre[] = {36,98,160,222,284}; // x positions of the 5 columns
+int turret_ycentre = 216; // turret y alignment
+int enemy_y_centres[] = {17,45,73,101,129,157};//y-positions on the map
+int curr_pos; // to move the turret
+int enemy_radius = 5;// radius of enemies
+short turret_color = red;//turret colour and the siege colour
+int enemy_map[5][6] = {{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0}};//stores location of the enemies
 int spawnDelay = 1000; // Current delay between enemy spawns
 int numColumns = 3; // Number of columns to spawn enemies in
 int timer = 0;//timer basically
@@ -564,7 +564,7 @@ void start_game()
       spawnDelay-=50;
     }
     if(spawnDelay==500)
-    spawnDelay-=25;
+    spawnDelay-=15;
 
   int check = enemy_update();
   if(!check)
@@ -573,16 +573,45 @@ void start_game()
  }
 }
 
+void init()
+{
+  for(int i=0; i<5; i++)
+  {
+    for(int j=0; j<6; j++)
+    {
+      enemy_map[i][j] = 0;
+    }
+  }
+spawnDelay = 1000; // Current delay between enemy spawns
+numColumns = 3; // Number of columns to spawn enemies in
+timer = 0;//timer basically
+last_shot=0;//tracks when the last shot was taken
+
+}
+
 void end_game()
 {
    clear_screen();
   level_screen();
+  write_string(38,29,"GAME OVER");
+  write_string(30,31,"PRESS P TO PLAY AGAIN");
+  volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
+  char c;
+  while(1)
+  {
+    c =  get_jtag(JTAG_UART_ptr);
+    if(c=='p' || c=='P')
+    return;
+  }
 }
 
 int main()
 {
   srand(time(NULL));
+  home:
   home_screen();
   start_game();
   end_game();
+  init();
+  goto home;
 }

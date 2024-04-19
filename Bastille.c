@@ -42,8 +42,8 @@ int curr_pos;
 int enemy_radius = 5;
 short turret_color = red;
 int enemy_map[5][6] = {{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0}};
-int spawnDelay = 100000/2; // Current delay between enemy spawns
-int numColumns = 2; // Number of columns to spawn enemies in
+int spawnDelay = 1000; // Current delay between enemy spawns
+int numColumns = 4; // Number of columns to spawn enemies in
 
 
 
@@ -378,7 +378,7 @@ int main()
  enemy_spawn();
  while(1)
  {
-    time = (time+1)%(1000000000);
+    time = (time+1)%(100000000);
   char c = get_jtag(JTAG_UART_ptr);
   move_turret(c);
   enemy_render();

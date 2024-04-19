@@ -1,3 +1,7 @@
+//Declaration :- This is Entirely My Original Work made for Phase-II of Architecture Lab CS210 Project in 2024
+//ANIRUDH D BHAT 2201CS94
+
+
 #include <stdlib.h>
 #include <time.h>
 

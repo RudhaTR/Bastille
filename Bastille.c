@@ -243,6 +243,20 @@ void make_turret(int x_centre,int y_centre,int color)
    }
 }
 
+void make_turret_homescreen(int x_centre,int y_centre,int color)
+{
+   if(color==unrender)
+   { 
+    draw_square_centered(x_centre,y_centre,4,20,unrender,unrender);
+    draw_rectangle_centered(x_centre,y_centre-(42),4,6,16,unrender,unrender);
+   }
+   else
+   {
+    draw_square_centered(x_centre,y_centre,4,20,color,white);
+    draw_rectangle_centered(x_centre,y_centre-(42),4,6,16,color,white);
+   }
+}
+
 void draw_line(short color)
 {
     for(int i=4;i<316;i++)
@@ -429,8 +443,8 @@ short choose_colour(int red_count, int green_count, int blue_count)
 void set_turret_color(int red_count,int green_count, int blue_count)
 {
      short colour_here = choose_colour(red_count,green_count,blue_count);
-    make_turret(160,170,unrender);
-    make_turret(160,170,colour_here);
+    make_turret_homescreen(160,170,unrender);
+    make_turret_homescreen(160,170,colour_here);
     turret_color = colour_here;
 }
 
@@ -466,44 +480,54 @@ void home_screen()
     else if(c=='Q' || c=='q')
     {
           if(red_count<30)
+          {
           red_count+=3;
-
           set_turret_color(red_count,green_count,blue_count);
+          }
+
+          
     }
      else if(c=='A' || c=='a')
     {
           if(green_count<64)
+          {
           green_count+=4;
-
           set_turret_color(red_count,green_count,blue_count);
+          }
+
+          
     }
      else if(c=='Z' || c=='z')
     {
           if(blue_count<30)
+          {
           blue_count+=3;
-
           set_turret_color(red_count,green_count,blue_count);
+          }
     }
       else if(c=='W' || c=='w')
     {
           if(red_count>0)
+          {
           red_count-=3;
-
           set_turret_color(red_count,green_count,blue_count);
+          }
     }
      else if(c=='S' || c=='s')
     {
           if(green_count>0)
+          {
           red_count-=4;
-
           set_turret_color(red_count,green_count,blue_count);
+          }
     }
      else if(c=='X' || c=='x')
     {
           if(blue_count>0)
+          {
           blue_count-=3;
-
           set_turret_color(red_count,green_count,blue_count);
+          }
     }
   }
 }

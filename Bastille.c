@@ -41,7 +41,7 @@ int enemy_y_centres[] = {17,45,73,101,129,157};
 int curr_pos;
 int enemy_radius = 5;
 short turret_color = red;
-int enemy_map[5][6] = {{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1}};
+int enemy_map[5][6] = {{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0}};
 int spawnDelay = 1e7; // Current delay between enemy spawns
 int numColumns = 2; // Number of columns to spawn enemies in
 
@@ -300,7 +300,7 @@ void enemy_spawn()
   while(k)
   {
     int y = rand()%5;
-    if(enemy_map[0][y]!=-1)
+    if(enemy_map[0][y]!=0)
     continue;
     else
     {
@@ -315,10 +315,23 @@ int enemy_update()
 {
   for(int i=0;i<5;i++)
   {
-    if(enemy_map[i][5]!=-1)
+    if(enemy_map[i][5]!=0)
     return 0;
   }
   enemy_render(unrender);
+  for(int i=0;i<5;i++)
+  {
+    for(int j=4; j>=0;j--)
+    {
+        if(enemy_map[i][j]==0)
+        continue;
+        else
+        {
+          enemy_map[i][j+1] = enemy_map[i][j];
+
+        }
+    }
+  }
 
 }
 
@@ -330,7 +343,7 @@ void enemy_render(int render_stage)
     {
       for(int j=0; j<6;j++)
       {
-          if(enemy_map[i][j]==-1)
+          if(enemy_map[i][j]==0)
           continue;
           else
           make_circle(turret_xcentre[i],enemy_y_centres[j],enemy_radius,unrender);
@@ -343,7 +356,7 @@ void enemy_render(int render_stage)
       {
        for(int j=0; j<6;j++)
         {
-          if(enemy_map[i][j]==-1)
+          if(enemy_map[i][j]==0)
           continue;
           else
           {

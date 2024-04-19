@@ -420,14 +420,17 @@ void turret_action(char c)
   }
 }
 
-int main()
+void home_screen()
 {
-  srand(time(NULL));
   clear_screen();
   level_screen();
- //make_grid();
   draw_line(red);
- make_turret(turret_xcentre[2],turret_ycentre,red);
+}
+
+void start_game()
+{
+
+   make_turret(turret_xcentre[2],turret_ycentre,red);
  curr_pos = 2;
  volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
  
@@ -457,4 +460,11 @@ int main()
   break;
   }
  }
+}
+
+int main()
+{
+  srand(time(NULL));
+  home_screen();
+  start_game();
 }

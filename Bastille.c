@@ -40,7 +40,10 @@ int turret_ycentre = 216;
 int enemy_y_centres[] = {17,45,73,101,129,157};
 int curr_pos;
 short turret_color = red;
-int col_values[5][6] = {{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1}};
+int enemy_map[5][6] = {{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1}};
+int spawnDelay = 1e7; // Current delay between enemy spawns
+int numColumns = 2; // Number of columns to spawn enemies in
+
 
 void write_pixel(int x, int y, short colour) 
 {
@@ -289,10 +292,28 @@ void move_turret(char c)
   return;
 }
 
+void enemy_spawn()
+{
+  int k = numColumns;
+  while(k)
+  {
+    int y = rand()%5;
+    if(enemy_map[0][y]!=-1)
+    continue;
+    else
+    {
+      k--;
+      int enemy_type = (rand()%3)+1;
+      enemy_map[0][y] = enemy_type;
+    }
+  }
+}
+
 
 
 int main()
 {
+  srand(time(NULL));
   clear_screen();
   level_screen();
   make_grid();

@@ -506,8 +506,8 @@ void home_screen()
   level_screen();
   char c;
    volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
-   write_string(38,6,"BASTILLE");
-   write_string(30,9,"PRESS P TO BEGIN THE GAME");
+   write_string(28,6,"STORMING OF BASTILLE");
+   write_string(26,55,"PRESS P TO BEGIN THE GAME");
    char *heading = "COLOUR       +       -";
    char *for_red = "RED          Q       W";
    char *for_green = "GREEN        A       S";

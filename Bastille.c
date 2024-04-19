@@ -441,9 +441,9 @@ int main()
   enemy_render();
   if(timer%(spawnDelay)==0)
   {
-    if(spawnDelay==900)
-    numColumns=5;
     if(spawnDelay==800)
+    numColumns=5;
+    if(spawnDelay==700)
     numColumns=10;
     if(spawnDelay==600)
     numColumns=20;

@@ -47,6 +47,8 @@ int numColumns = 3; // Number of columns to spawn enemies in
 int timer = 0;//timer basically
 int last_shot=0;//tracks when the last shot was taken
 int score = 0;//to keep track of score;
+char seg7[10] =	{0b00111111, 0b00000110, 0b01011011, 0b01001111, 0b01100110, 
+						 0b01101101, 0b01111101, 0b00000111, 0b01111111, 0b01100111};//0 to 9 on Hex Display
 
 
 
@@ -125,6 +127,35 @@ char get_jtag(volatile int *JTAG_UART_ptr)
     return ((char)data & 0xFF);
   else
     return ('\0');
+}
+
+void displayScoreOnHex3_0(int score) 
+{
+    volatile int * HEX3_HEX0_ptr = (int *) HEX3_HEX0_BASE;
+    volatile int * HEX5_HEX4_ptr = (int *) HEX5_HEX4_BASE;
+    int digits[6] = { 0,0,0,0,0,0 };    // digits is an array of the score digits from with entry 0 being the ones
+    int bitCode = 0;
+    int bitCode2=0;
+
+    for (int i = 0; i < 4; ++i) {
+        digits[i] = score % 10;
+        score /= 10;
+    }
+
+    // get the bit codes from most sig digit to least
+    // and shift them by 4
+    for (int i = 5; i >=4; --i) {
+        char code = seg7[digits[i]];
+        bitCode2 = bitCode2 << 8 | code;
+    }
+
+    for (int i = 3; i >= 0; --i) {
+        char code = seg7[digits[i]];
+        bitCode = bitCode << 8 | code;
+    }
+
+    *HEX3_HEX0_ptr = bitCode;
+    *HEX5_HEX4_ptr = bitCode2;
 }
 
 void tostring(char str[], int num)
@@ -567,6 +598,7 @@ void start_game()
  enemy_spawn();
  while(1)
  {
+  displayScoreOnHex3_0(score);
     timer = (timer+1)%(100000000);
     
   char c = get_jtag(JTAG_UART_ptr);

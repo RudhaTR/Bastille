@@ -39,10 +39,12 @@ int turret_xcentre[] = {36,98,160,222,284};
 int turret_ycentre = 216;
 int enemy_y_centres[] = {17,45,73,101,129,157};
 int curr_pos;
+int enemy_radius = 5;
 short turret_color = red;
 int enemy_map[5][6] = {{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1}};
 int spawnDelay = 1e7; // Current delay between enemy spawns
 int numColumns = 2; // Number of columns to spawn enemies in
+
 
 
 void write_pixel(int x, int y, short colour) 
@@ -309,7 +311,54 @@ void enemy_spawn()
   }
 }
 
+int enemy_update()
+{
+  for(int i=0;i<5;i++)
+  {
+    if(enemy_map[i][5]!=-1)
+    return 0;
+  }
+  enemy_render(unrender);
 
+}
+
+void enemy_render(int render_stage)
+{
+    if(render_stage==unrender)
+    {
+    for(int i=0; i<5; i++)
+    {
+      for(int j=0; j<6;j++)
+      {
+          if(enemy_map[i][j]==-1)
+          continue;
+          else
+          make_circle(turret_xcentre[i],enemy_y_centres[j],enemy_radius,unrender);
+      }
+    }
+    }
+    else
+    {
+      for(int i=0; i<5; i++)
+      {
+       for(int j=0; j<6;j++)
+        {
+          if(enemy_map[i][j]==-1)
+          continue;
+          else
+          {
+            int k = enemy_map[i][j];
+            if(k==1)
+            make_circle(turret_xcentre[i],enemy_y_centres[j],enemy_radius,green);
+            else if(k==2)
+            make_circle(turret_xcentre[i],enemy_y_centres[j],enemy_radius,Blue);
+            else
+            make_circle(turret_xcentre[i],enemy_y_centres[j],enemy_radius,red); 
+          }
+        }
+      }
+    }
+}
 
 int main()
 {

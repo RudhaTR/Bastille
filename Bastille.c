@@ -517,7 +517,7 @@ void home_screen()
     {
           if(green_count>0)
           {
-          red_count-=4;
+          green_count-=4;
           set_turret_color(red_count,green_count,blue_count);
           }
     }

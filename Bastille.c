@@ -42,7 +42,7 @@ int curr_pos;
 int enemy_radius = 5;
 short turret_color = red;
 int enemy_map[5][6] = {{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0}};
-int spawnDelay = 10000000/2; // Current delay between enemy spawns
+int spawnDelay = 100000/2; // Current delay between enemy spawns
 int numColumns = 2; // Number of columns to spawn enemies in
 
 
@@ -299,16 +299,16 @@ void enemy_spawn()
   int k = 0 ;
   while(k<numColumns)
   {
-    int y = rand()%5;
-    if(enemy_map[0][y]==0)
+    int x = rand()%5;
+    if(enemy_map[x][0]==0)
     {
       k++;
       int enemy_type = (rand()%3)+1;
-      enemy_map[0][y] = enemy_type;
+      enemy_map[x][0] = enemy_type;
     }
-    
     else
     {
+      k++;
       continue;
     }
   }
@@ -321,7 +321,7 @@ int enemy_update()
     if(enemy_map[i][5]!=0)
     return 0;
   }
-  enemy_render(unrender);
+ 
   for(int i=0;i<5;i++)
   {
     for(int j=4; j>=0;j--)
@@ -335,32 +335,21 @@ int enemy_update()
         }
     }
   }
-  enemy_render(1);
+  enemy_spawn();
 
   return 1;
 
 }
 
-void enemy_render(int render_stage)
+void enemy_render()
 {
-    if(render_stage==unrender)
-    {
-    for(int i=0; i<5; i++)
-    {
-      for(int j=0; j<6;j++)
-      {
-          make_circle(turret_xcentre[i],enemy_y_centres[j],enemy_radius,unrender);
-      }
-    }
-    }
-    else
-    {
+
       for(int i=0; i<5; i++)
       {
        for(int j=0; j<6;j++)
         {
           if(enemy_map[i][j]==0)
-          continue;
+          make_circle(turret_xcentre[i],enemy_y_centres[j],enemy_radius,gold_orange);
           else
           {
             int k = enemy_map[i][j];
@@ -373,7 +362,6 @@ void enemy_render(int render_stage)
           }
         }
       }
-    }
 }
 
 int main()
@@ -381,23 +369,24 @@ int main()
   srand(time(NULL));
   clear_screen();
   level_screen();
- // make_grid();
+ //make_grid();
   draw_line(red);
  make_turret(turret_xcentre[2],turret_ycentre,red);
  curr_pos = 2;
  volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
  int time = 0;
+ enemy_spawn();
  while(1)
  {
     time = (time+1)%(1000000000);
   char c = get_jtag(JTAG_UART_ptr);
   move_turret(c);
+  enemy_render();
   if(time%(spawnDelay)==0)
   {
   int check = enemy_update();
   if(!check)
   break;
-  enemy_spawn();
   }
  }
    

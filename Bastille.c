@@ -420,6 +420,20 @@ void turret_action(char c)
   }
 }
 
+short choose_colour(int red_count, int green_count, int blue_count)
+{
+  short colour_here = (red_count<<11)+(green_count<<5)+blue_count;
+  return colour_here;
+}
+
+void set_turret_color(int red_count,int green_count, int blue_count)
+{
+     short colour_here = choose_colour(red_count,green_count,blue_count);
+    make_turret(160,170,unrender);
+    make_turret(160,170,colour_here);
+    turret_color = colour_here;
+}
+
 void home_screen()
 {
   clear_screen();
@@ -441,22 +455,60 @@ void home_screen()
    int red_count = 30;
   int green_count = 0;
   int blue_count = 0;
-  short colour_here = choose_colour(red_count,green_count,blue_count);
-  make_turret(160,120,colour_here);
-   
+
+  set_turret_color(red_count,green_count,blue_count);
+  
   while(1)
   {
     c = get_jtag(JTAG_UART_ptr);
     if(c=='P' || c=='p')
     return;
+    else if(c=='Q' || c=='q')
+    {
+          if(red_count<30)
+          red_count+=3;
+
+          set_turret_color(red_count,green_count,blue_count);
+    }
+     else if(c=='A' || c=='a')
+    {
+          if(green_count<64)
+          green_count+=4;
+
+          set_turret_color(red_count,green_count,blue_count);
+    }
+     else if(c=='Z' || c=='z')
+    {
+          if(blue_count<30)
+          blue_count+=3;
+
+          set_turret_color(red_count,green_count,blue_count);
+    }
+      else if(c=='W' || c=='w')
+    {
+          if(red_count>0)
+          red_count-=3;
+
+          set_turret_color(red_count,green_count,blue_count);
+    }
+     else if(c=='S' || c=='s')
+    {
+          if(green_count>0)
+          red_count-=4;
+
+          set_turret_color(red_count,green_count,blue_count);
+    }
+     else if(c=='X' || c=='x')
+    {
+          if(blue_count>0)
+          blue_count-=3;
+
+          set_turret_color(red_count,green_count,blue_count);
+    }
   }
 }
 
-short choose_colour(int red_count, int green_count, int blue_count)
-{
-  short colour_here = red_count<<11+green_count<<5+blue_count;
-  return colour_here;
-}
+
 
 void start_game()
 {
@@ -504,9 +556,7 @@ void end_game()
 int main()
 {
   srand(time(NULL));
-  home:
   home_screen();
   start_game();
   end_game();
-  //goto home;
 }

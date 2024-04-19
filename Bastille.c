@@ -343,9 +343,6 @@ void enemy_render(int render_stage)
     {
       for(int j=0; j<6;j++)
       {
-          if(enemy_map[i][j]==0)
-          continue;
-          else
           make_circle(turret_xcentre[i],enemy_y_centres[j],enemy_radius,unrender);
       }
     }

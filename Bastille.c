@@ -40,6 +40,7 @@ int turret_ycentre = 216;
 int enemy_y_centres[] = {17,45,73,101,129,157};
 int curr_pos;
 short turret_color = red;
+int col_values[5][6] = {{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1},{-1,-1,-1,-1,-1,-1}};
 
 void write_pixel(int x, int y, short colour) 
 {

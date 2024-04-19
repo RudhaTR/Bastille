@@ -603,7 +603,7 @@ void start_game() // increasing speed based on timer and control of nums using s
  while(1)
  {
   displayScoreOnHex3_0(score);
-    timer = (timer+1)%(10000);
+    timer = (timer+1)%(5000);
     
   char c = get_jtag(JTAG_UART_ptr);
   turret_action(c);

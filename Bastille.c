@@ -162,7 +162,7 @@ void displayScoreOnHex3_0(int score)
     *HEX5_HEX4_ptr = bitCode2;
 }
 
-void tostring(char str[], int num)
+void tostring(char str[], int num)// std function to convert a number into its corresponding string for display
 {
     int i, rem, len = 0, n;
  
@@ -206,7 +206,7 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,s
     int x_small = x_centre-half_side;
     int y_small = y_centre-half_side;
 
-    for(int i = x_big; i<= (x_big+2*(half_side+padding));i++)
+    for(int i = x_big; i<= (x_big+2*(half_side+padding));i++) // make big square of the colour of border
     {
       for(int j=y_big; j<=(y_big+2*(half_side+padding));j++)
       {
@@ -214,7 +214,7 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,s
       }
     }
 
-      for(int i = x_small; i<= (x_small+2*half_side);i++)
+      for(int i = x_small; i<= (x_small+2*half_side);i++) // fill the smaller square so ur left with the border
     {
       for(int j=y_small; j<=(y_small+2*half_side);j++)
       {
@@ -223,7 +223,7 @@ void draw_square_centered(int x_centre,int y_centre,int padding, int half_side,s
     }
 }
 
-void draw_rectangle_centered(int x_centre,int y_centre,int padding, int breadth_half,int height_half,short colour,short colour_border )
+void draw_rectangle_centered(int x_centre,int y_centre,int padding, int breadth_half,int height_half,short colour,short colour_border )//similar to square but now we are adding breadth and height
 {
     int x_big = x_centre-(padding+breadth_half);
     int y_big = y_centre-(padding+height_half);
@@ -254,9 +254,9 @@ void level_screen()
     for (y = 3; y <237; y++) {
     write_pixel(x,y,gold_orange);
   }
-  }
+  }//Fills interior
 int i;
-  for(i=0;i<320;i++)
+  for(i=0;i<320;i++)//makes borders
   {
    write_pixel(i,237,Brown);
    write_pixel(i,238,Brown);
@@ -284,21 +284,21 @@ int i;
   }
 }
 
-void make_turret(int x_centre,int y_centre,int color)
+void make_turret(int x_centre,int y_centre,int color) //renders turret
 {
-   if(color==unrender)
+   if(color==unrender) //unrendering
    { 
     draw_square_centered(x_centre,y_centre,2,10,unrender,unrender);
     draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,unrender,unrender);
    }
-   else
+   else//renders the colour mentioned
    {
     draw_square_centered(x_centre,y_centre,2,10,color,white);
     draw_rectangle_centered(x_centre,y_centre-(21),2,3,8,color,white);
    }
 }
 
-void make_turret_homescreen(int x_centre,int y_centre,int color)
+void make_turret_homescreen(int x_centre,int y_centre,int color) // Bigger turret for the homescreen
 {
    if(color==unrender)
    { 
@@ -312,7 +312,7 @@ void make_turret_homescreen(int x_centre,int y_centre,int color)
    }
 }
 
-void draw_line(short color)
+void draw_line(short color) // the Fort
 {
     for(int i=4;i<316;i++)
   {
@@ -321,7 +321,7 @@ void draw_line(short color)
   }
 }
 
-void make_grid()
+void make_grid() // Just made it to design and check if the grid is proper and to check if it looks nice and is centered
 {
   for(int i=3;i<237;i++)
   {
@@ -341,7 +341,7 @@ void make_grid()
 }
 
 
-void move_turret(char c)
+void move_turret(char c) //checks input and current position and moves it if valid
 {
   if(c=='a' || c=='A')
   {
@@ -365,7 +365,7 @@ void move_turret(char c)
   return;
 }
 
-void shoot_turret()
+void shoot_turret() // theres a shoot delay, also calculates score, checks first element and reduces it
 { 
 
   int check;
@@ -401,7 +401,7 @@ void shoot_turret()
   return;
 }
 
-void enemy_spawn()
+void enemy_spawn() // spawns enemies randomly
 {
   int k = 0 ;
   int count=0;
@@ -423,7 +423,7 @@ void enemy_spawn()
   }
 }
 
-int enemy_update()
+int enemy_update() // makes a new wave of enemies and pushes the old wave forward
 {
   for(int i=0;i<5;i++)
   {
@@ -450,7 +450,7 @@ int enemy_update()
 
 }
 
-void enemy_render()
+void enemy_render() // renders respective coloured enemies
 {
 
       for(int i=0; i<5; i++)
@@ -473,7 +473,7 @@ void enemy_render()
       }
 }
 
-void turret_action(char c)
+void turret_action(char c) // moves or shoots based on input
 {
   if(c=='a' || c=="A" || c=='d' || c=='D')
   {
@@ -490,13 +490,13 @@ void turret_action(char c)
   }
 }
 
-short choose_colour(int red_count, int green_count, int blue_count)
+short choose_colour(int red_count, int green_count, int blue_count) // for homescreen
 {
   short colour_here = (red_count<<11)+(green_count<<5)+blue_count;
   return colour_here;
 }
 
-void set_turret_color(int red_count,int green_count, int blue_count)
+void set_turret_color(int red_count,int green_count, int blue_count) // rendering the chosen colour
 {
      short colour_here = choose_colour(red_count,green_count,blue_count);
     make_turret_homescreen(160,170,unrender);
@@ -504,7 +504,7 @@ void set_turret_color(int red_count,int green_count, int blue_count)
     turret_color = colour_here;
 }
 
-void home_screen()
+void home_screen() // displays and calculates and renders
 {
   clear_screen();
   level_screen();
@@ -590,7 +590,7 @@ void home_screen()
 
 
 
-void start_game()
+void start_game() // increasing speed based on timer and control of nums using speed
 {
   clear_screen();
   level_screen();
@@ -630,7 +630,7 @@ void start_game()
  }
 }
 
-void init()
+void init() // to keep replayability helps randomize the game , thanks stupid implementation of rand()
 {
   for(int i=0; i<5; i++)
   {
@@ -647,7 +647,7 @@ score=0;
 
 }
 
-void end_game()
+void end_game()//Display score and go back to start
 {
    clear_screen();
   level_screen();

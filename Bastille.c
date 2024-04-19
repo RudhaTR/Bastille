@@ -43,7 +43,9 @@ int enemy_radius = 5;
 short turret_color = red;
 int enemy_map[5][6] = {{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0},{0,0,0,0,0,0}};
 int spawnDelay = 1000; // Current delay between enemy spawns
-int numColumns = 4; // Number of columns to spawn enemies in
+int numColumns = 3; // Number of columns to spawn enemies in
+int timer = 0;//timer basically
+int last_shot=0;//tracks when the last shot was taken
 
 
 
@@ -295,7 +297,20 @@ void move_turret(char c)
 }
 
 void shoot_turret()
-{
+{ 
+
+  int check;
+  if(timer>=last_shot)
+  {
+  check = timer - last_shot;
+  }
+  else
+  check=20;
+  
+
+  if(check<20)
+  return;
+
   int x = curr_pos;
   int j=5;
   int flag=0;
@@ -310,6 +325,7 @@ void shoot_turret()
   if(flag)
   {
     enemy_map[x][j]--;
+    last_shot = timer;
   }
   else
   return;
@@ -318,7 +334,8 @@ void shoot_turret()
 void enemy_spawn()
 {
   int k = 0 ;
-  while(k<numColumns)
+  int count=0;
+  while(k<numColumns && count<5)
   {
     int x = rand()%5;
     if(enemy_map[x][0]==0)
@@ -326,6 +343,7 @@ void enemy_spawn()
       k++;
       int enemy_type = (rand()%3)+1;
       enemy_map[x][0] = enemy_type;
+      count++;
     }
     else
     {
@@ -398,7 +416,7 @@ void turret_action(char c)
   }
   else
   {
-
+    return;
   }
 }
 
@@ -412,20 +430,31 @@ int main()
  make_turret(turret_xcentre[2],turret_ycentre,red);
  curr_pos = 2;
  volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
- int time = 0;
+ 
  enemy_spawn();
  while(1)
  {
-    time = (time+1)%(100000000);
+    timer = (timer+1)%(100000000);
+    
   char c = get_jtag(JTAG_UART_ptr);
-  move_turret(c);
+  turret_action(c);
   enemy_render();
-  if(time%(spawnDelay)==0)
+  if(timer%(spawnDelay)==0)
   {
+    if(spawnDelay==900)
+    numColumns=5;
+    if(spawnDelay==800)
+    numColumns=10;
+    if(spawnDelay==600)
+    numColumns=20;
+    if(spawnDelay>500)
+    {
+      spawnDelay-=50;
+    }
+
   int check = enemy_update();
   if(!check)
   break;
   }
  }
-   
 }

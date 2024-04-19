@@ -46,6 +46,7 @@ int spawnDelay = 1000; // Current delay between enemy spawns
 int numColumns = 3; // Number of columns to spawn enemies in
 int timer = 0;//timer basically
 int last_shot=0;//tracks when the last shot was taken
+int score = 0;//to keep track of score;
 
 
 
@@ -124,6 +125,25 @@ char get_jtag(volatile int *JTAG_UART_ptr)
     return ((char)data & 0xFF);
   else
     return ('\0');
+}
+
+void tostring(char str[], int num)
+{
+    int i, rem, len = 0, n;
+ 
+    n = num;
+    while (n != 0)
+    {
+        len++;
+        n /= 10;
+    }
+    for (i = 0; i < len; i++)
+    {
+        rem = num % 10;
+        num = num / 10;
+        str[len - (i + 1)] = rem + '0';
+    }
+    str[len] = '\0';
 }
 
 void make_circle(int x0, int y0, int radius, short color)
@@ -339,6 +359,7 @@ void shoot_turret()
   if(flag)
   {
     enemy_map[x][j]--;
+    score++;
     last_shot = timer;
   }
   else
@@ -593,6 +614,10 @@ void end_game()
 {
    clear_screen();
   level_screen();
+  char *str;
+  tostring(str,score);
+  write_string(34,6,"SCORE =");
+  write_string(43,6,str);
   write_string(38,29,"GAME OVER");
   write_string(30,31,"PRESS P TO PLAY AGAIN");
   volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;

@@ -424,13 +424,25 @@ void home_screen()
 {
   clear_screen();
   level_screen();
-  draw_line(red);
+  char c;
+   volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
+   write_string(38,30,"BASTILLE");
+   write_string(30,32,"PRESS P TO BEGIN THE GAME");
+  while(1)
+  {
+    c = get_jtag(JTAG_UART_ptr);
+    if(c=='P' || c=='p')
+    return;
+  }
+  
 }
 
 void start_game()
 {
-
-   make_turret(turret_xcentre[2],turret_ycentre,red);
+  clear_screen();
+  level_screen();
+    draw_line(turret_color);
+   make_turret(turret_xcentre[2],turret_ycentre,turret_color);
  curr_pos = 2;
  volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
  
@@ -462,9 +474,18 @@ void start_game()
  }
 }
 
+void end_game()
+{
+   clear_screen();
+  level_screen();
+}
+
 int main()
 {
   srand(time(NULL));
+  home:
   home_screen();
   start_game();
+  end_game();
+  //goto home;
 }

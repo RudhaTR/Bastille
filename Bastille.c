@@ -607,6 +607,7 @@ spawnDelay = 1000; // Current delay between enemy spawns
 numColumns = 3; // Number of columns to spawn enemies in
 timer = 0;//timer basically
 last_shot=0;//tracks when the last shot was taken
+score=0;
 
 }
 

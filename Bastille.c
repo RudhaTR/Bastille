@@ -603,7 +603,7 @@ void start_game() // increasing speed based on timer and control of nums using s
  while(1)
  {
   displayScoreOnHex3_0(score);
-    timer = (timer+1)%(100000000);
+    timer = (timer+1)%(10000);
     
   char c = get_jtag(JTAG_UART_ptr);
   turret_action(c);
@@ -620,8 +620,8 @@ void start_game() // increasing speed based on timer and control of nums using s
     {
       spawnDelay-=50;
     }
-    if(spawnDelay==500)
-    spawnDelay-=15;
+    if(spawnDelay<=500 && spawnDelay>470)
+    spawnDelay-=10;
 
   int check = enemy_update();
   if(!check)

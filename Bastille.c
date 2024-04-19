@@ -426,15 +426,36 @@ void home_screen()
   level_screen();
   char c;
    volatile int * JTAG_UART_ptr = (int *) JTAG_UART_BASE;
-   write_string(38,30,"BASTILLE");
-   write_string(30,32,"PRESS P TO BEGIN THE GAME");
+   write_string(38,6,"BASTILLE");
+   write_string(30,9,"PRESS P TO BEGIN THE GAME");
+   char *heading = "COLOUR       +       -";
+   char *for_red = "RED          Q       W";
+   char *for_green = "GREEN        A       S";
+   char *for_blue = "BLUE         Z       X";
+   write_string(5,25,heading);
+   write_string(5,27,for_red);
+   write_string(5,29,for_blue);
+   write_string(5,31,for_green);
+
+
+   int red_count = 30;
+  int green_count = 0;
+  int blue_count = 0;
+  short colour_here = choose_colour(red_count,green_count,blue_count);
+  make_turret(160,120,colour_here);
+   
   while(1)
   {
     c = get_jtag(JTAG_UART_ptr);
     if(c=='P' || c=='p')
     return;
   }
-  
+}
+
+short choose_colour(int red_count, int green_count, int blue_count)
+{
+  short colour_here = red_count<<11+green_count<<5+blue_count;
+  return colour_here;
 }
 
 void start_game()

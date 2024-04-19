@@ -447,7 +447,7 @@ int main()
     numColumns=10;
     if(spawnDelay==600)
     numColumns=20;
-    if(spawnDelay>500)
+    if(spawnDelay>450)
     {
       spawnDelay-=50;
     }

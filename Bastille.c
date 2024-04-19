@@ -294,6 +294,27 @@ void move_turret(char c)
   return;
 }
 
+void shoot_turret()
+{
+  int x = curr_pos;
+  int j=5;
+  int flag=0;
+  for(j;j>=0;j--)
+  {
+    if(enemy_map[x][j]!=0)
+    {
+      flag=1;
+    break;
+    }
+  }
+  if(flag)
+  {
+    enemy_map[x][j]--;
+  }
+  else
+  return;
+}
+
 void enemy_spawn()
 {
   int k = 0 ;
@@ -362,6 +383,23 @@ void enemy_render()
           }
         }
       }
+}
+
+void turret_action(char c)
+{
+  if(c=='a' || c=="A" || c=='d' || c=='D')
+  {
+    move_turret(c);
+    return;
+  }
+  else if(c==' ')
+  {
+    shoot_turret();
+  }
+  else
+  {
+
+  }
 }
 
 int main()
